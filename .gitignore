@@ -1,0 +1,7 @@
+.DS_Store
+.vscode
+.venv
+*.pyc
+.env
+examples
+temp
