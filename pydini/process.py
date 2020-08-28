@@ -22,6 +22,10 @@ class LineIsEmptyLineException(Exception):
     """Line Is Empty Line Exception"""
 
 
+class MissingBlockException(Exception):
+    """Missing Block Exception"""
+
+
 def getBlockFile(block):
     return join(workingDirectory, block.hash())
 
@@ -55,6 +59,10 @@ def commandProcessor(moduleName, arguments, chain):
 
         logging.info("Executed block: {} {}".format(moduleName, block.hash()))
 
+        return True
+
+    raise MissingBlockException(moduleName)
+
 
 def lineProcessor(line, chain):
     if line.startswith("#"):
@@ -68,7 +76,7 @@ def lineProcessor(line, chain):
     moduleName = arguments[0]
     arguments = arguments[1:]
 
-    commandProcessor(moduleName, arguments, chain)
+    return commandProcessor(moduleName, arguments, chain)
 
 
 def process(path):
@@ -86,3 +94,11 @@ def process(path):
                 logging.info(line)
             except LineIsEmptyLineException:
                 pass
+
+
+if __name__ == '__main__':
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+
+    process("/Users/bernhardesperester/git/python-scriptable-houdini/examples/example")
+    

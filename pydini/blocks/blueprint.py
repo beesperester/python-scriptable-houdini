@@ -1,9 +1,11 @@
 import hou
 from argparse import ArgumentParser
+from os.path import isfile
 
 # pydini
 from pydini.classes.block import Block
 from pydini.process import process
+from pydini.utilities.hashutilities import hashFile
 
 class BlockBlueprint(Block):
     
@@ -16,6 +18,9 @@ class BlockBlueprint(Block):
         fetchParser.add_argument("path")
 
         parsedArguments = parser.parse_args(arguments)
+
+        if parsedArguments.module == "fetch" and isfile(parsedArguments.path):
+            self.salt = hashFile(parsedArguments.path)
 
         return parsedArguments
 
