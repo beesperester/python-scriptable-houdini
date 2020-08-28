@@ -1,4 +1,7 @@
 import unittest
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 # pydini
 from pydini.cli import cli
