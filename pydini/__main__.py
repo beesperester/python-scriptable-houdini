@@ -1,3 +1,4 @@
-from pydini.dev import process
+# pydini
+from pydini.cli import cli
 
-process("/Users/bernhardesperester/git/python-scriptable-houdini/examples/example")
+cli()

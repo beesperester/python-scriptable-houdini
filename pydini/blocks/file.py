@@ -2,9 +2,9 @@ import hou
 from argparse import ArgumentParser
 
 # pydini
-from pydini.blockmodules.blockmodule import BlockModule
+from pydini.classes.block import Block
 
-class BlockFile(BlockModule):
+class BlockFile(Block):
     
     def parse(self, arguments):
         parser = ArgumentParser("file")
@@ -28,5 +28,5 @@ class BlockFile(BlockModule):
         if self.parsedArguments.module == "save":
             hou.hipFile.save(self.parsedArguments.path)
 
-def blockModuleFactory(arguments):
-    return BlockFile(arguments)
+def blockFactory(arguments, previousBlock):
+    return BlockFile(arguments, previousBlock)

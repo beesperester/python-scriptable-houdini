@@ -3,10 +3,10 @@ from argparse import ArgumentParser
 from imp import load_source
 
 # pydini
-from pydini.blockmodules.blockmodule import BlockModule
+from pydini.classes.block import Block
 from pydini.utilities.hashutilities import hashFile
 
-class BlockRun(BlockModule):
+class BlockRun(Block):
 
     def parse(self, arguments):
         parser = ArgumentParser("run")
@@ -31,5 +31,5 @@ class BlockRun(BlockModule):
             if callable(action):
                 action()
 
-def blockModuleFactory(arguments):
-    return BlockRun(arguments)
+def blockFactory(arguments, previousBlock):
+    return BlockRun(arguments, previousBlock)

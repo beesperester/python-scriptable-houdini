@@ -1,12 +1,14 @@
+import logging
 from json import dumps
 
 # pydini
 from pydini.utilities.hashutilities import hashString
 
-class BlockModule(object):
+class Block(object):
 
-    def __init__(self, arguments):
+    def __init__(self, arguments, previousBlock):
         self.arguments = arguments
+        self.previousBlock = previousBlock if isinstance(previousBlock, Block) else None
         self.salt = None
         
         self.parsedArguments = self.parse(arguments)
@@ -20,8 +22,12 @@ class BlockModule(object):
     def serialize(self):
         return {
             "arguments": dumps(self.arguments),
+            "previousBlock": self.previousBlock.hash() if self.previousBlock else None,
             "salt": self.salt
         }
 
+    def id(self):
+        return "{arguments}.{previousBlock}.{salt}".format(**self.serialize())
+
     def hash(self):
-        return hashString("{arguments}.{salt}".format(**self.serialize()))
+        return hashString(self.id())
