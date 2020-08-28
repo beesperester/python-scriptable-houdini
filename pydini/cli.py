@@ -15,3 +15,5 @@ def cli(cmd = None):
 
     if arguments.module == "file":
         process(arguments.path)
+
+    return True
