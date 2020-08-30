@@ -19,6 +19,9 @@ class BlockFile(Block):
 
         parsedArguments = parser.parse_args(arguments)
 
+        if parsedArguments.module == "open" and isfile(parsedArguments.path):
+            self.salt = hashFile(parsedArguments.path)
+
         return parsedArguments
 
     def execute(self):
