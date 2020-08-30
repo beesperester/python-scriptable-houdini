@@ -13,15 +13,21 @@ Create, manage and automate your houdini base setups with maximum flexibility. H
 ## Example Usecase
 You have a houdini file containing a turntable setup where you load a geometry file from an external path and render a sequence to disk. Now you have multiple assets that you want to create turntables of. With pydini this could be done like this:
 
-create_asset_turntables.py
 ```python
+""" create_asset_turntables.py
+This is your python file from which you process the blueprint. You pass the necessary variables to the blueprint via python dict. 
+"""
+
 from pydini.process import process
 
+# all my assets
 assets = [
     "/path/to/assets/robot.abc",
     "/path/to/assets/dinosaur.abc",
     "/path/to/assets/spaceship.abc"
 ]
+
+# iterate over all my assets and run turntable process
 for asset in assets:
     env = {
         "asset": asset
@@ -31,12 +37,14 @@ for asset in assets:
 
 ```
 
-**turntable.bp**
 ```bash
+# turntable.bp
 # load base setup
 houdini load /path/to/turntable.hip
 
 # use python file to set framerange
+# this instruction will be cached and only cooked once
+# each call to turntable.bp will then refer to the cached file instead
 python load /path/to/turntablesetup.py setFrameRange 1001 1002
 
 # use python file to set path attribute for asset geometry
@@ -48,13 +56,28 @@ python --cache false load /path/to/turntablesetup.py setAssetPath ${asset}
 houdini save /path/to/assets/${asset}_turntable.hip
 ```
 
-**turntablesetup.py**
 ```python
+""" turntablesetup.py
+This file contains the methods that should be triggered via blueprint instructions.
+"""
 import hou
 
 def setFrameRange(start, stop):
+    """ Set Frame Range of turntable.
+    
+    Args:
+        int start
+        int stop
+    """
+    
     hou.playbar.setFrameRange(start, stop)
 
 def setAssetPath(asset):
+    """ Set path to asset of turntable.
+    
+    Args:
+        string asset
+    """
+    
     hou.node("/obj/turntable").parm("assetpath").set(asset)
 ```
