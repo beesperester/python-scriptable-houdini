@@ -11,6 +11,8 @@ Create, manage and automate your houdini base setups with maximum flexibility. H
 * **Python** - Use python to describe your setup steps
 
 ## Example Usecase
+**Beware:** This is currently mostly a writeup on how I want it to work, not a reflection on how it works at the moment.
+
 ### Turntable
 You have a houdini file containing a turntable setup where you load a geometry file from an external path and render a sequence to disk. Now you have multiple assets that you want to create turntables of. With pydini this could be done like this:
 
