@@ -4,6 +4,15 @@ from argparse import ArgumentParser
 from pydini.process import process
 
 def cli(cmd = None):
+    """ Command Line Interface.
+
+    Args:
+        string  cmd
+
+    Returns:
+        boolean
+    """
+    
     parser = ArgumentParser("pydini")
     
     modules = parser.add_subparsers(dest="module")

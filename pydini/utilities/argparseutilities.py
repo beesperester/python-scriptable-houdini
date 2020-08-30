@@ -1,6 +1,18 @@
 import argparse
 
-def StringToBool(value):
+def stringToBool(value):
+    """ String to bool.
+
+    Args:
+        string  value
+
+    Returns:
+        boolean
+
+    Raises:
+        argparse.ArgumentTypeError
+    """
+
     if isinstance(value, bool):
         return value
 

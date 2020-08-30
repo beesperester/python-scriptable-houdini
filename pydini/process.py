@@ -27,10 +27,37 @@ class MissingBlockException(Exception):
 
 
 def getBlockFile(block):
+    """ Get block file path.
+
+    Args:
+        pydini.classes.block.Block  block
+
+    Returns:
+        string
+    """
+
     return join(workingDirectory, block.hash())
 
 
 def commandProcessor(moduleName, arguments, chain):
+    """ Process command.
+
+    Create new Block instance from module name, arguments and previous Block.
+    Check if a cooked version of Block exists on filesystem.
+
+    Args:
+        string                              moduleName
+        list[string]                        arguments
+        list[pydini.classes.block.Block]    chain
+    
+    Returns:
+        boolean
+
+    Raises:
+        pydini.process.BlockCompiledException
+        pydini.process.MissingBlockException
+    """
+
     module = import_module("pydini.blocks.{}".format(moduleName))
 
     if hasattr(module, "blockFactory"):
@@ -65,6 +92,20 @@ def commandProcessor(moduleName, arguments, chain):
 
 
 def lineProcessor(line, chain):
+    """ Process line.
+
+    Args:
+        string                              line
+        list[pydini.classes.block.Block]    chain
+
+    Returns:
+        boolean
+
+    Raises:
+        pydini.process.LineIsCommentException
+        pydini.process.LineIsEmptyLineException
+    """
+
     if line.startswith("#"):
         raise LineIsCommentException()
 
@@ -80,6 +121,12 @@ def lineProcessor(line, chain):
 
 
 def process(path):
+    """ Process Blueprint.
+
+    Args:
+        string path
+    """
+
     chain = []
 
     with open(path) as f:
