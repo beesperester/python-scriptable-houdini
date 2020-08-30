@@ -14,16 +14,16 @@ class BlockRun(Block):
 
         modules = parser.add_subparsers(dest="module")
 
-        fileParser = modules.add_parser("file")
-        fileParser.add_argument("path")
-        fileParser.add_argument("method", default="main")
+        loadParser = modules.add_parser("load")
+        loadParser.add_argument("path")
+        loadParser.add_argument("method", default="main")
 
         execParser = modules.add_parser("exec")
         execParser.add_argument("cmd", nargs="+")
 
         parsedArguments = parser.parse_args(arguments)
 
-        if parsedArguments.module == "file" and isfile(parsedArguments.path):
+        if parsedArguments.module == "load" and isfile(parsedArguments.path):
             self.salt = hashFile(parsedArguments.path)
 
         return parsedArguments
@@ -48,7 +48,7 @@ class BlockRun(Block):
             exec(line)
 
     def execute(self):
-        if self.parsedArguments.module == "file":
+        if self.parsedArguments.module == "load":
             self.executeFile()
 
         if self.parsedArguments.module == "exec":

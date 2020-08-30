@@ -14,18 +14,18 @@ class BlockBlueprint(Block):
 
         modules = parser.add_subparsers(dest="module")
 
-        fetchParser = modules.add_parser("fetch")
-        fetchParser.add_argument("path")
+        loadParser = modules.add_parser("load")
+        loadParser.add_argument("path")
 
         parsedArguments = parser.parse_args(arguments)
 
-        if parsedArguments.module == "fetch" and isfile(parsedArguments.path):
+        if parsedArguments.module == "load" and isfile(parsedArguments.path):
             self.salt = hashFile(parsedArguments.path)
 
         return parsedArguments
 
     def execute(self):
-        if self.parsedArguments.module == "fetch":
+        if self.parsedArguments.module == "load":
             process(self.parsedArguments.path)
 
 def blockFactory(arguments, previousBlock):
