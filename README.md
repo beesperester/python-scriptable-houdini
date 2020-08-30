@@ -15,7 +15,8 @@ You have a houdini file containing a turntable setup where you load a geometry f
 
 ```python
 """ create_asset_turntables.py
-This is your python file from which you process the blueprint. You pass the necessary variables to the blueprint via python dict. 
+This is your python file from which you process the blueprint. 
+You pass the necessary variables to the blueprint via python dict. 
 """
 
 from pydini.process import process
@@ -37,6 +38,7 @@ for asset in assets:
 
 ```
 
+***/path/to/turntable.bp***
 ```bash
 # turntable.bp
 # load base setup
@@ -56,6 +58,7 @@ python --cache false load /path/to/turntablesetup.py setAssetPath ${asset}
 houdini save /path/to/assets/${asset}_turntable.hip
 ```
 
+***/path/to/turntablesetup.py***
 ```python
 """ turntablesetup.py
 This file contains the methods that should be triggered via blueprint instructions.
